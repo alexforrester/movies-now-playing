@@ -2,7 +2,8 @@ package com.digian.movies.api;
 
 import com.digian.movies.model.NowPlayingResponse;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -13,5 +14,5 @@ import retrofit2.http.Query;
 public interface MoviesService {
 
     @GET("movie/now_playing")
-    Call<NowPlayingResponse> getNowPlayingMovies(@Query("api_key") String api_key, @Query("language") String language, @Query("page") int page, @Query("region") String region);
+    Observable<NowPlayingResponse> getNowPlayingMovies(@Query("api_key") String api_key, @Query("language") String language, @Query("page") int page, @Query("region") String region);
 }

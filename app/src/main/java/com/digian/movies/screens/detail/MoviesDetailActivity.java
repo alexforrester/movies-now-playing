@@ -1,13 +1,13 @@
 package com.digian.movies.screens.detail;
 
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.digian.movies.R;
+import com.digian.movies.model.Movie;
 
-public class MovieDetailActivity extends AppCompatActivity implements MovieDetailContract.View{
+public class MoviesDetailActivity extends AppCompatActivity implements MoviesDetailContract.View{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     //TODO Implement Loading Movie
     @Override
     public void loadMovie(Movie movie) {
-        Log.d(MovieDetailActivity.class.getSimpleName(), "Load Movie into view");
+        Log.d(MoviesDetailActivity.class.getSimpleName(), "Load Movie into view");
     }
 }

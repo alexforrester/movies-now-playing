@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">MoviesNowPlaying</string>
+    <string name="app_name">Movies Now Playing</string>
+    <string name="report_error">There has been an error: %s</string>
+    <string name="previous"><![CDATA[<]]></string>
+    <string name="next"><![CDATA[>]]></string>
 </resources>

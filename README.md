@@ -1,2 +1,1 @@
-# MoviesNowPlaying
 # movies-now-playing

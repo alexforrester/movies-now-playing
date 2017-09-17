@@ -1,5 +1,7 @@
 package com.digian.movies;
 
+import com.digian.movies.di.AppModule;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -7,7 +9,7 @@ import org.junit.rules.ExpectedException;
 /**
  * Created by alexforrester on 15/09/2017.
  */
-public class MoviesAppModuleTest {
+public class AppModuleTest {
 
 
     @Rule
@@ -18,7 +20,7 @@ public class MoviesAppModuleTest {
         expectedException.expect(NullPointerException.class);
         expectedException.expectMessage("Context cannot be null");
 
-        new MoviesAppModule(null);
+        new AppModule(null);
     }
 
 

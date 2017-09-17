@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.digian.movies.screens.grid.MovieGridActivity">
+    tools:context="com.digian.movies.screens.grid.MoviesGridActivity">
 
-    <TextView
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/grid_view_height"
+        android:columnWidth="@dimen/grid_view_column_width"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/material_grid_padding"
+        android:numColumns="auto_fit"
+        android:paddingTop= "@dimen/material_grid_padding_double"
+        android:scrollbars="vertical"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="8dp" />
+
+    <Button
+        android:id="@+id/leftButton"
+        android:layout_margin="@dimen/material_grid_padding_double"
+        android:textSize="@dimen/movie_grid_text_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@+id/gridview"
+        android:text="@string/previous" />
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/material_grid_padding_double"
+        android:src="@drawable/powered_by_rectangle_green" />
+
+    <Button
+        android:id="@+id/rightButton"
+        android:layout_margin="@dimen/material_grid_padding_double"
+        android:textSize="@dimen/movie_grid_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridview"
+        android:layout_alignParentEnd="true"
+        android:text="@string/next"/>
+
+</RelativeLayout>

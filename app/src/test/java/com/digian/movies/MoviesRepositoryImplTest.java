@@ -67,18 +67,6 @@ public class MoviesRepositoryImplTest {
         new MoviesRepositoryImpl(context, moviesService, null);
     }
 
-    @Test
-    public void given_pageno_set_as_zero_in_view_when_pageno_requested_then_page_one_returned(){
-
-        MoviesRepositoryImpl moviesRepository = spy(new MoviesRepositoryImpl(context, moviesService, sharedPreferences));
-
-        //Handles mocking issue with shared preferences
-        when(moviesRepository.getSavedPageNo()).thenReturn(Constants.THE_MOVIE_DB_DEFAULT_PAGE_NO);
-
-        moviesRepository.getMoviesPlayingNow(0);
-
-        verify(moviesService).getNowPlayingMovies(Constants.THE_MOVIE_DB_API_KEY,Constants.DEFAULT_LANGUAGE,Constants.THE_MOVIE_DB_DEFAULT_PAGE_NO,Constants.DEFAULT_REGION);
-    }
 
 
 

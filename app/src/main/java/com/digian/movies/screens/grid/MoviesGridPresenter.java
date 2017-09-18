@@ -7,12 +7,18 @@ package com.digian.movies.screens.grid;
 import android.content.Context;
 import android.util.Log;
 
+import com.digian.movies.Constants;
 import com.digian.movies.MoviesApp;
 import com.digian.movies.MoviesRepository;
 import com.digian.movies.model.NowPlayingResponse;
+import com.digian.movies.model.Pages;
+
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -21,6 +27,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -34,7 +41,7 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
     MoviesGridContract.View view;
 
     public MoviesGridPresenter(Context context) {
-        Log.d(TAG,"MoviesGridPresenter(Context context)");
+        Log.d(TAG, "MoviesGridPresenter(Context context)");
 
         if (context == null) {
             throw new NullPointerException("Context cannot be null");
@@ -49,11 +56,13 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
 
     @Override
     public void getMoviesPlayingNow(int pageNo) {
-        Log.d(TAG,"getMoviesPlayingNow(int pageNo)");
+        Log.d(TAG, "getMoviesPlayingNow(int pageNo)");
 
         moviesRepository.getMoviesPlayingNow(pageNo)
                 .subscribeOn(Schedulers.io())
-                .doOnComplete(() -> moviesRepository.setPageNo(pageNo))
+                .doOnNext(nowPlayingResponse -> {
+                    moviesRepository.setPages(nowPlayingResponse.getPage(), nowPlayingResponse.getTotalPages());
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<NowPlayingResponse>() {
                     @Override
@@ -63,8 +72,9 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
 
                     @Override
                     public void onNext(NowPlayingResponse nowPlayingResponse) {
-                        Log.d(TAG, "onSuccess(NowPlayingResponse nowPlayingResponse");
+                        Log.d(TAG, "onNext(NowPlayingResponse nowPlayingResponse)");
                         view.loadMovies(nowPlayingResponse.getMovieImages());
+                        updateNavigation();
                     }
 
                     @Override
@@ -79,6 +89,31 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
                     }
                 });
 
+        updateNavigation();
+    }
+
+    private void updateNavigation() {
+        Single.fromCallable(() -> moviesRepository.getPages())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Pages>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe(Disposable d)");
+                    }
+
+                    @Override
+                    public void onSuccess(Pages pages) {
+                        Log.d(TAG, "onSuccess(Pages pages)");
+                        view.updateNavigation(pages);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError(Throwable e)");
+                        view.showError(e.getMessage());
+                    }
+                });
     }
 
     @Override

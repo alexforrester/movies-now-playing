@@ -1,6 +1,7 @@
 package com.digian.movies.screens.grid;
 
 import com.digian.movies.model.MovieGridImage;
+import com.digian.movies.model.Pages;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public class MoviesGridContract {
     interface View {
         void loadMovies(List<MovieGridImage> movies);
         void showError(String error);
+        void updateNavigation(Pages pages);
     }
 }

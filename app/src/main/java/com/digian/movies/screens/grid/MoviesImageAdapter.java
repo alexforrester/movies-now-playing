@@ -43,8 +43,8 @@ public class MoviesImageAdapter extends BaseAdapter {
         return movieGridImages.size();
     }
 
-    public Object getItem(int position) {
-        return null;
+    public MovieGridImage getItem(int position) {
+       return movieGridImages.get(position);
     }
 
     public long getItemId(int position) {

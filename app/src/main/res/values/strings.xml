@@ -3,4 +3,6 @@
     <string name="report_error">There has been an error: %s</string>
     <string name="previous"><![CDATA[<]]></string>
     <string name="next"><![CDATA[>]]></string>
+    <string name="the_movie_db_credit_image">The Movie DB Credit Image</string>
+    <string name="the_movie_main_image">The Movie DB Main Movie Image</string>
 </resources>

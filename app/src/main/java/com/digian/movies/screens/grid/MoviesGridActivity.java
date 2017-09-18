@@ -64,23 +64,26 @@ public class MoviesGridActivity extends AppCompatActivity implements MoviesGridC
         Log.d(TAG,"loadMovies(List<MovieGridImage> movieImages)");
         moviesImageAdapter = new MoviesImageAdapter(this, movieImages);
         gridView.setAdapter(moviesImageAdapter);
-
     }
 
     @Override
     public void showError(String error) {
+        Log.d(TAG, String.format("showError(String error): Error %s",error));
         Toast.makeText(this, getString(R.string.report_error, error), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void updateNavigation(Pages pages) {
-        Log.d(TAG,"loadMovies(List<MovieGridImage> movieImages)");
+        Log.d(TAG,"updateNavigation(Pages pages)");
 
         final int currentPage = pages.getPageNo();
         final int totalPages = pages.getTotalPages();
 
+        Log.d(TAG, String.format("Current Page %d", currentPage));
+        Log.d(TAG, String.format("Total Pages %d", totalPages));
+
         if (currentPage == Constants.THE_MOVIE_DB_DEFAULT_PAGE_NO) {
-            previousButton.setVisibility(View.GONE);
+            previousButton.setVisibility(View.INVISIBLE);
         }
         else {
             previousButton.setVisibility(View.VISIBLE);
@@ -88,7 +91,7 @@ public class MoviesGridActivity extends AppCompatActivity implements MoviesGridC
         }
 
         if (currentPage == totalPages) {
-            nextButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.INVISIBLE);
         }
         else {
             nextButton.setVisibility(View.VISIBLE);

@@ -61,8 +61,11 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
         moviesRepository.getMoviesPlayingNow(pageNo)
                 .subscribeOn(Schedulers.io())
                 .doOnNext(nowPlayingResponse -> {
+                    Log.d(TAG,"setting pages and updating navigation");
                     moviesRepository.setPages(nowPlayingResponse.getPage(), nowPlayingResponse.getTotalPages());
+                    updateNavigation();
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<NowPlayingResponse>() {
                     @Override
@@ -74,7 +77,6 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
                     public void onNext(NowPlayingResponse nowPlayingResponse) {
                         Log.d(TAG, "onNext(NowPlayingResponse nowPlayingResponse)");
                         view.loadMovies(nowPlayingResponse.getMovieImages());
-                        updateNavigation();
                     }
 
                     @Override
@@ -88,8 +90,6 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
                         Log.d(TAG, "onComplete()");
                     }
                 });
-
-        updateNavigation();
     }
 
     private void updateNavigation() {
@@ -99,18 +99,18 @@ public class MoviesGridPresenter implements MoviesGridContract.Presenter<MoviesG
                 .subscribe(new SingleObserver<Pages>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe(Disposable d)");
+                        Log.d(TAG, "updateNavigation onSubscribe(Disposable d)");
                     }
 
                     @Override
                     public void onSuccess(Pages pages) {
-                        Log.d(TAG, "onSuccess(Pages pages)");
+                        Log.d(TAG, "updateNavigation onSuccess(Pages pages)");
                         view.updateNavigation(pages);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError(Throwable e)");
+                        Log.d(TAG, "updateNavigation onError(Throwable e)");
                         view.showError(e.getMessage());
                     }
                 });

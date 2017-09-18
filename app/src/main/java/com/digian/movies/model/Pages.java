@@ -1,12 +1,11 @@
 package com.digian.movies.model;
 
 import android.content.SharedPreferences;
-import android.support.annotation.VisibleForTesting;
+
 import android.util.Log;
 
 import com.digian.movies.Constants;
 
-import static android.content.ContentValues.TAG;
 import static com.digian.movies.Constants.THE_MOVIE_DB_DEFAULT_PAGE_NO;
 import static com.digian.movies.Constants.THE_MOVIE_DB_PAGE_NUMBER_UNDEFINED;
 
@@ -16,6 +15,7 @@ import static com.digian.movies.Constants.THE_MOVIE_DB_PAGE_NUMBER_UNDEFINED;
 
 public class Pages {
 
+    private static final String TAG = Pages.class.getSimpleName();
     private final SharedPreferences sharedPreferences;
     int pageNo;
     int totalPages;
@@ -37,7 +37,7 @@ public class Pages {
 
     public int getValidatedPageNo(int pageNoToValidate) {
         Log.d(TAG,String.format("getValidatedPageNo(%d)",pageNoToValidate));
-        return pageNoToValidate == THE_MOVIE_DB_PAGE_NUMBER_UNDEFINED ? getPageNo() : pageNoToValidate;
+        return pageNoToValidate == THE_MOVIE_DB_PAGE_NUMBER_UNDEFINED ? THE_MOVIE_DB_DEFAULT_PAGE_NO : pageNoToValidate;
     }
 
     public int getPageNo() {

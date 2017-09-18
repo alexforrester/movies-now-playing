@@ -40,17 +40,10 @@ public class PagesTest {
 
         Pages pages = spy(new Pages(sharedPreferences));
 
-        //Handles mocking issue with shared preferences
-        when(pages.getPageNo()).thenReturn(THE_MOVIE_DB_DEFAULT_PAGE_NO);
-
         int pageNo = pages.getValidatedPageNo(Constants.THE_MOVIE_DB_PAGE_NUMBER_UNDEFINED);
 
-        verify(pages, times(2)).getPageNo();
-        assertEquals(THE_MOVIE_DB_DEFAULT_PAGE_NO, pageNo);
+        assertEquals(Constants.THE_MOVIE_DB_DEFAULT_PAGE_NO, pageNo);
     }
-
-
-
 
 
 }

@@ -6,8 +6,6 @@ import com.digian.movies.model.Movie;
 import com.digian.movies.model.NowPlayingResponse;
 import com.digian.movies.model.Pages;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 
 /**

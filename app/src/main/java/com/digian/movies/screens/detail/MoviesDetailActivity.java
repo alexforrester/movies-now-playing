@@ -64,6 +64,7 @@ public class MoviesDetailActivity extends AppCompatActivity implements MoviesDet
 
         title.setText(movie.getTitle());
         description.setText(movie.getOverview());
+        //FIXME - Network request is run even if placeholder image is null
         Glide.with(this).load(movie.getImageUrl()).into(imageView);
     }
 
@@ -86,6 +87,14 @@ public class MoviesDetailActivity extends AppCompatActivity implements MoviesDet
 
         MovieCollectionAdapter adapter = new MovieCollectionAdapter(parts,listener);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy()");
+        moviesDetailPresenter.setView(null);
+        ((MoviesApp) getApplication()).releaseMoviesDetailComponent();
     }
 
 }

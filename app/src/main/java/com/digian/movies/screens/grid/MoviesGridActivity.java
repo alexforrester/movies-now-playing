@@ -103,6 +103,7 @@ public class MoviesGridActivity extends AppCompatActivity implements MoviesGridC
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG,"onDestroy()");
+        moviesGridPresenter.setView(null);
         ((MoviesApp) getApplication()).releaseMoviesGridComponent();
     }
 }
